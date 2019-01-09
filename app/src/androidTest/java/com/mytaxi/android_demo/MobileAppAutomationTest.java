@@ -71,8 +71,6 @@ public class MobileAppAutomationTest {
         onView(withContentDescription("Open navigation drawer")).perform(click());
         onView(withText("Logout")).perform(click());
 
-
-
     }
 
     public void loginToMyTaxi(String UserName, String Password) {
