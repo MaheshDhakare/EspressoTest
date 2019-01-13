@@ -6,6 +6,7 @@ import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.mytaxi.android_demo.R;
 import com.mytaxi.android_demo.activities.MainActivity;
 
 import org.junit.Before;
@@ -43,7 +44,7 @@ public class HomeTest_TestCases {
         ReuMethods.login("crazydog335","venture");
     try {
         Thread.sleep(2000);
-        loginTitle.check(matches(isDisplayed()));
+        loginTitle.check(matches(withText("mytaxi demo")));
         System.out.println("--Login to mytaxiDemoapp is successful");
         ReuMethods.closeTheapp();
     } catch (InterruptedException e) {
@@ -51,13 +52,15 @@ public class HomeTest_TestCases {
     }
     System.out.println("------------TC_001 Ends here-----------");
     }
+
 @Test
     public void TC_002_LoginToMytaxiDemoAppWithInCorrectUsername() {
     System.out.println("# TC_002_LoginToMytaxiDemoAppWithInCorrectUsername Starts here #");
     ReuMethods.login("crazydog3351", "venture");
+
     try {
         Thread.sleep(3000);
-        loginError.check(matches(isDisplayed()));
+        loginError.check(matches(withText("Login failed")));
         System.out.println("--Login failed message is poped up");
         }
     catch (InterruptedException e) {
@@ -71,7 +74,7 @@ public class HomeTest_TestCases {
         ReuMethods.login("crazydog335","venture1");
         try {
             Thread.sleep(2000);
-            loginError.check(matches(isDisplayed()));
+            loginError.check(matches(withText("Login failed")));
             System.out.println("--Login failed message is poped up");
         }
         catch (InterruptedException e) {
@@ -85,7 +88,7 @@ public class HomeTest_TestCases {
         ReuMethods.login("crazydog335");
         try {
             Thread.sleep(2000);
-            loginError.check(matches(isDisplayed()));
+            loginError.check(matches(withText("Login failed")));
             System.out.println("--Login failed message is poped up");
         }
         catch (InterruptedException e) {
@@ -100,7 +103,7 @@ public class HomeTest_TestCases {
 
         ReuMethods.login("crazydog335","venture");
           System.out.println("--Login to mytaxiDemoapp is successful");
-        ReuMethods.SearchAndcallDriver('s','a',"Sarah Scott");
+        ReuMethods.SearchAndcallDriver("Seppe Jansen");
 
     System.out.println("------------TC_005 Ends here-----------");
     }

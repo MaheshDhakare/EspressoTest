@@ -2,10 +2,13 @@ package com.mytaxi_MobileAppAutomationTest;
 
 
 import android.support.test.espresso.ViewInteraction;
+import android.support.test.espresso.action.ViewActions;
+import android.support.test.espresso.matcher.RootMatchers;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v7.widget.RecyclerView;
 
 import com.mytaxi.android_demo.R;
 
@@ -18,6 +21,8 @@ import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
+import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
@@ -54,22 +59,29 @@ public class DemoTest_ReusableMethods {
 
     }
 
-// Use this method to Search and call driver.
-    public void SearchAndcallDriver(Character FirstChar, Character SecChar, String driverName) {
 
-        String FirstChar_string = Character.toString(FirstChar);
-        String SecChar_string = Character.toString(SecChar);
+// Use this method to Search and call driver.
+    public void SearchAndcallDriver(String driverName) {
+
+        Character FirstChar_Char = driverName.charAt(0);
+        String FirstChar = Character.toString(FirstChar_Char);
+        Character SecChar_Char = driverName.charAt(1);
+        String SecChar = Character.toString(SecChar_Char);
 
         try {
             Thread.sleep(2000);
-            onView(withId(R.id.textSearch)).perform(typeText(FirstChar_string));
-            Thread.sleep(2000);
-            onView(withId(R.id.textSearch)).perform(typeText(SecChar_string), closeSoftKeyboard());
-            onData(anything())
-                    .inAdapterView(withId(R.id.drawer_layout)).atPosition(0).onChildView(withText(driverName)).perform(click());
-/*            onView(withId(R.id.drawer_layout)).inRoot(onData(anything()).onChildView(withContentDescription("searchContainer"))
-                    .onChildView(withText("Sarah Scott")).perform(click()));*/
-           onView(withId(R.id.fab)).perform(click());
+            onView(withId(R.id.textSearch)).perform(typeText(FirstChar));
+            onView(withId(R.id.textSearch)).perform(typeText(SecChar), closeSoftKeyboard());
+
+            onView(withText(driverName))
+                    .inRoot(RootMatchers.isPlatformPopup())
+                    .perform(ViewActions.click());
+                        System.out.println("--Found driver '" + driverName + "' Successfully");
+            onView(withId(R.id.fab))
+                   .check(matches(isClickable()))
+                   .perform(click());
+                        System.out.println("--Successfully clciked on Call button");
+
         } catch (InterruptedException e) {
             System.out.println("--Unable to search driver name");
         }
